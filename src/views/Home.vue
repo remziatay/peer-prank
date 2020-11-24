@@ -14,7 +14,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import SoundBox from '@/components/SoundBox.vue';
 import { firestore } from '../firebase';
 

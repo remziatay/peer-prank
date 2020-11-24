@@ -20,8 +20,8 @@ export default {
     },
   },
   mounted() {
-    new Howl({ src: [''] }).once('unlock', function() {
-      console.log('ready');
+    new Howl({ src: ['a.mp3'], preload: false }).once('unlock', function() {
+      console.log('Sound unlocked');
     });
   },
 };
