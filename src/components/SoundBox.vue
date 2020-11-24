@@ -1,16 +1,32 @@
 <template>
-  <div class="shadow mb-3">
-    <h1>{{ sound.title }}</h1>
-    <p>Used in {{ sound.prankCount }} pranks.</p>
-    <audio :src="sound.url" controls loop>
-      Your browser doesn't support audio!
-    </audio>
-  </div>
+  <button
+    class="mb-3 p-2 shadow border rounded-md flex flex-col gap-3 "
+    @click="player.play()"
+  >
+    <h1 class="text-3xl tracking-wider font-mono mx-auto">
+      {{ sound.title }}
+    </h1>
+    <p class="text-xs font-semibold ml-auto">
+      Used in {{ sound.prankCount }} pranks.
+    </p>
+  </button>
 </template>
 
 <script>
+import { Howl } from 'howler';
 export default {
+  data: () => ({
+    player: null,
+  }),
   props: ['sound'],
+  mounted() {
+    this.player = new Howl({
+      src: [this.sound.url],
+      html5: true,
+      preload: false,
+      volume: 1,
+    });
+  },
 };
 </script>
 

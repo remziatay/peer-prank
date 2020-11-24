@@ -1,6 +1,9 @@
 <template>
   <div class="home">
-    <div class="flex flex-wrap justify-center gap-4 p-4">
+    <div
+      id="grid"
+      class="grid gap-4 p-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+    >
       <sound-box
         v-for="sound in sounds"
         :key="sound.url"
@@ -29,20 +32,8 @@ export default {
       .get()
       .then(res => res.docs.map(doc => doc.data()))
       .then(sounds => (this.sounds = sounds.sort((a, b) => a.title > b.title)));
-    /* storage
-      .ref('/sounds')
-      .listAll()
-      .then(files =>
-        Promise.all(files.items.map(item => item.getDownloadURL()))
-      )
-      .then(fileLinks =>
-        Promise.all(
-          fileLinks.map(link =>
-            soundsCollection.add({ title: 'blabla', url: link, prankCount: 0 })
-          )
-        )
-      )
-      .then(console.log('DONE')); */
   },
 };
 </script>
+
+<style scoped></style>

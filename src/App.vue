@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { Howl } from 'howler';
 export default {
   data() {
     return {
@@ -17,6 +18,11 @@ export default {
     $route: function() {
       this.pranking = this.$route.name === 'Prank';
     },
+  },
+  mounted() {
+    new Howl({ src: [''] }).once('unlock', function() {
+      console.log('ready');
+    });
   },
 };
 </script>
