@@ -1,14 +1,19 @@
 <template>
-  <div v-if="!pranking" id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view />
+  <navbar v-if="!pranking"></navbar>
+  <router-view v-slot="{ Component }">
+    <keep-alive include="Home" max="1">
+      <component :is="Component" :key="$route.fullPath"></component>
+    </keep-alive>
+  </router-view>
 </template>
 
 <script>
 import { Howl } from 'howler';
+import Navbar from '@/components/Navbar.vue';
 export default {
+  components: {
+    Navbar,
+  },
   data() {
     return {
       pranking: true,
