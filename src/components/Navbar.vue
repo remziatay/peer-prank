@@ -11,7 +11,8 @@
           >
             <span class="sr-only">Open main menu</span>
             <svg
-              :class="[menuOpen ? 'hidden' : 'block', 'h-6', 'w-6']"
+              v-if="!menuOpen"
+              class="h-6 w-6"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -26,7 +27,8 @@
               />
             </svg>
             <svg
-              :class="[menuOpen ? 'block' : 'hidden', 'h-6', 'w-6']"
+              v-if="menuOpen"
+              class="h-6 w-6"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -107,7 +109,7 @@
 
 <script>
 import logo from '../assets/logo.png';
-console.log(logo);
+
 export default {
   data: () => ({
     menuOpen: false,
