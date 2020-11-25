@@ -1,12 +1,11 @@
 <template>
   <div class="home">
-    <div class="flex w-full max-w-6xl">
-      <div class="" :style="{ flex: '0 0 max-content' }">
-        CHOOSE WHAT YOU WANT
+    <div class="flex w-full max-w-7xl px-6 mx-auto py-2 gap-2 max-h-full">
+      <div class="flex-none border shadow-md rounded py-2 px-4 overflow-auto">
+        <steps />
       </div>
       <div
-        id="grid"
-        class="flex-auto grid gap-4 p-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        class="flex-1 min-w-0 overflow-auto px-2 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
       >
         <sound-box
           v-for="sound in sounds"
@@ -20,6 +19,7 @@
 
 <script>
 import SoundBox from '@/components/SoundBox.vue';
+import Steps from '@/components/Steps.vue';
 /* import { firestore } from '../firebase'; */
 import soundsTemp from '../soundsTemp.js';
 
@@ -30,6 +30,7 @@ export default {
   }),
   components: {
     SoundBox,
+    Steps,
   },
   mounted() {
     // Keep sounds local for now development

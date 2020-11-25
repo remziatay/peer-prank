@@ -1,10 +1,16 @@
 <template>
-  <navbar v-if="!pranking"></navbar>
-  <router-view v-slot="{ Component }">
-    <keep-alive include="Home" max="1">
-      <component :is="Component" :key="$route.fullPath"></component>
-    </keep-alive>
-  </router-view>
+  <div class="h-screen flex flex-col">
+    <navbar v-if="!pranking"></navbar>
+    <router-view v-slot="{ Component }">
+      <keep-alive include="Home" max="1">
+        <component
+          class="flex-1 min-h-0 overflow-auto"
+          :is="Component"
+          :key="$route.fullPath"
+        ></component>
+      </keep-alive>
+    </router-view>
+  </div>
 </template>
 
 <script>

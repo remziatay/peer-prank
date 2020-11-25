@@ -1,9 +1,9 @@
 <template>
   <button
-    class="mb-3 p-2 shadow border-2 rounded-md flex flex-col gap-3 hover:shadow-lg hover:bg-green-50 focus:outline-none"
+    class="p-2 shadow border-2 rounded-md flex flex-col gap-3 hover:shadow-lg hover:bg-green-50 focus:outline-none"
     @click="player.play()"
   >
-    <h1 class="text-3xl tracking-wider font-mono mx-auto">
+    <h1 class="text-2xl tracking-wider font-mono mx-auto">
       {{ sound.title }}
     </h1>
     <p class="text-xs font-semibold ml-auto">
