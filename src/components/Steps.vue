@@ -1,13 +1,14 @@
 <template>
   <div class="flex flex-col">
-    <div
-      class="step relative flex items-center py-6"
+    <button
+      class="step relative flex items-center py-6 select-none"
       :class="{ active: i === active, done: i < active, next: i > active }"
       v-for="(step, i) in steps"
       :key="step.key"
+      @click="active = i"
     >
       <div class="ball"></div>
-      <div class="ml-6 flex flex-col">
+      <div class="ml-6 flex flex-col items-start">
         <div class="uppercase font-semibold text-xs sm:text-sm">
           {{ step.title }}
         </div>
@@ -15,7 +16,7 @@
           {{ step.description }}
         </div>
       </div>
-    </div>
+    </button>
   </div>
 </template>
 
@@ -68,11 +69,17 @@ export default {
     left: calc(var(--size) / -2 + 1px);
   }
 
+  &:hover:not(:focus) > .ball {
+    @apply bg-white border-2 border-purple-800;
+    &::before {
+      display: none;
+    }
+  }
+
   &.active {
     &::after {
       @apply border-gray-400;
     }
-
     > .ball {
       @apply bg-white border-2 border-purple-800;
 
@@ -94,7 +101,7 @@ export default {
     }
   }
 
-  &.done > .ball::before {
+  &.done:not(:hover) > .ball::before {
     content: '✓';
     @apply text-white font-bold;
   }

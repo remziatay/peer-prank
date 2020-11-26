@@ -1,11 +1,13 @@
 <template>
   <div class="home">
-    <div class="flex w-full max-w-7xl px-6 mx-auto py-2 gap-2 max-h-full">
-      <div class="flex-none border shadow-md rounded py-2 px-4 overflow-auto">
+    <div
+      class="flex w-full mx-auto max-w-screen-2xl md:px-6 py-2 gap-2 max-h-full"
+    >
+      <div class="flex-none py-2 px-4 overflow-auto">
         <steps />
       </div>
       <div
-        class="flex-1 min-w-0 overflow-auto px-2 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+        class="flex-1 min-w-0 overflow-auto px-2 grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
       >
         <sound-box
           v-for="sound in sounds"

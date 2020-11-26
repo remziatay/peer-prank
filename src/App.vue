@@ -38,4 +38,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+button:focus:not(:focus-visible) {
+  outline: none;
+}
+button:focus-visible {
+  outline: 1px dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+}
+</style>
