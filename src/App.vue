@@ -39,6 +39,14 @@ export default {
 </script>
 
 <style>
+html {
+  background-color: #e5e5f7;
+  background-image: radial-gradient(#444df793 0.75px, transparent 0.75px),
+    radial-gradient(#444df793 0.75px, #e5e5f7 0.75px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+}
+
 button:focus:not(:focus-visible) {
   outline: none;
 }

@@ -1,6 +1,6 @@
 <template>
   <button
-    class="p-2 shadow border-2 rounded-md flex flex-col gap-3 hover:shadow-lg hover:bg-green-50 focus:outline-none"
+    class="bg-gray-100 p-2 shadow border-2 rounded-md flex flex-col gap-3 hover:shadow-lg hover:border-indigo-700 focus:outline-none"
     @click="player.play()"
   >
     <h1 class="text-2xl tracking-wider font-mono mx-auto">

@@ -3,7 +3,9 @@
     <div
       class="flex w-full mx-auto max-w-screen-2xl md:px-6 py-2 gap-2 max-h-full"
     >
-      <div class="flex-none py-2 px-4 overflow-auto">
+      <div
+        class="flex-none py-2 px-4 overflow-auto bg-gray-100 rounded-md shadow"
+      >
         <steps />
       </div>
       <div
