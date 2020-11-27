@@ -1,7 +1,9 @@
 <template>
   <button
     class="bg-gray-100 p-2 shadow border-2 rounded-md flex flex-col gap-3 hover:shadow-lg hover:border-indigo-700 focus:outline-none"
-    @click="player.play()"
+    :class="[selected && 'shadow-lg border-indigo-700']"
+    @click="$emit('pick', sound.url)"
+    @mouseenter="player.play()"
   >
     <h1 class="text-2xl tracking-wider font-mono mx-auto">
       {{ sound.title }}
@@ -18,12 +20,12 @@ export default {
   data: () => ({
     player: null,
   }),
-  props: ['sound'],
+  props: ['sound', 'selected'],
+  emits: ['pick'],
   mounted() {
     this.player = new Howl({
       src: [this.sound.url],
-      html5: true,
-      preload: false,
+      preload: true,
       volume: 1,
     });
   },

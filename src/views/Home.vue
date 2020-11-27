@@ -6,35 +6,80 @@
       <div
         class="flex-none py-2 px-4 overflow-auto bg-gray-100 rounded-md shadow"
       >
-        <steps />
+        <steps :steps="steps" v-model:atStep="atStep" :lastStep="lastStep" />
       </div>
-      <div
-        class="flex-1 min-w-0 overflow-auto px-2 grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
-      >
-        <sound-box
-          v-for="sound in sounds"
-          :key="sound.url"
-          :sound="sound"
-        ></sound-box>
-      </div>
+
+      <pick-panel @next="lastStep > atStep && atStep++">
+        <template #title>
+          <p v-if="atStep === 0">Pick a Picture!</p>
+          <p v-else-if="atStep === 1">
+            Pick a Sound! <span>(Hover over to listen)</span>
+          </p>
+        </template>
+        <template #default>
+          <pictures
+            v-if="atStep === 0"
+            :pictures="pictures"
+            v-model:picture="selectedPicture"
+          />
+          <sounds
+            v-else-if="atStep === 1"
+            :sounds="sounds"
+            v-model:sound="selectedSound"
+          />
+          <div
+            v-else-if="atStep === 2"
+            v-text="'TESSSStsadsadasdsa'"
+            @click="lastStep = 3"
+          />
+        </template>
+      </pick-panel>
     </div>
   </div>
 </template>
 
 <script>
-import SoundBox from '@/components/SoundBox.vue';
+import Sounds from '@/components/Sounds.vue';
 import Steps from '@/components/Steps.vue';
+import Pictures from '@/components/Pictures.vue';
+import PickPanel from '@/components/PickPanel.vue';
 /* import { firestore } from '../firebase'; */
 import soundsTemp from '../soundsTemp.js';
 
 export default {
   name: 'Home',
+  components: {
+    Sounds,
+    Steps,
+    Pictures,
+    PickPanel,
+  },
   data: () => ({
     sounds: [],
+    pictures: [],
+    steps: [
+      {
+        title: 'Picture',
+        description: 'Choose what shall jump on your friends',
+      },
+      {
+        title: 'Sound',
+        description: 'Choose the sound that will play on jumpscare',
+      },
+      { title: 'title3', description: 'description3' },
+      { title: 'title4', description: 'description4' },
+      { title: 'title5', description: 'description5' },
+    ],
+    atStep: 0,
+    selectedPicture: null,
+    selectedSound: null,
   }),
-  components: {
-    SoundBox,
-    Steps,
+  computed: {
+    lastStep() {
+      if (!this.selectedPicture) return 0;
+      if (!this.selectedSound) return 1;
+      return 2;
+    },
   },
   mounted() {
     // Keep sounds local for now development

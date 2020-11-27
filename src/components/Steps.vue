@@ -1,11 +1,12 @@
 <template>
   <div class="flex flex-col">
     <button
-      class="step relative flex items-center py-6 select-none"
-      :class="{ active: i === active, done: i < active, next: i > active }"
       v-for="(step, i) in steps"
-      :key="step.key"
-      @click="active = i"
+      class="step relative flex items-center py-6 select-none focus:outline-none"
+      :class="stepClass(i)"
+      :key="step.title"
+      :disabled="lastStep < i"
+      @click="$emit('update:atStep', i)"
     >
       <div class="ball"></div>
       <div class="ml-6 flex flex-col items-start">
@@ -22,27 +23,18 @@
 
 <script>
 export default {
-  props: [
-    /* steps */
-  ],
-  data: () => ({
-    steps: [
-      {
-        title: 'Sound',
-        description: 'Choose the sound that will play on jumpscare',
-        key: 'Comp1',
-      },
-      {
-        title: 'Picture',
-        description: 'Choose what shall jump on your friends',
-        key: 'Comp2',
-      },
-      { title: 'title3', description: 'description3', key: 'Comp3' },
-      { title: 'title4', description: 'description4', key: 'Comp4' },
-      { title: 'title5', description: 'description5', key: 'Comp5' },
-    ],
-    active: 2,
-  }),
+  props: ['steps', 'atStep', 'lastStep'],
+  emits: ['update:atStep'],
+  methods: {
+    stepClass(i) {
+      return {
+        at: i === this.atStep,
+        active: i === this.lastStep,
+        done: i < this.lastStep,
+        next: i > this.lastStep,
+      };
+    },
+  },
 };
 </script>
 
@@ -69,17 +61,17 @@ export default {
     left: calc(var(--size) / -2 + 1px);
   }
 
-  &:hover:not(:focus) > .ball {
-    @apply bg-white border-2 border-purple-800;
-    &::before {
-      display: none;
-    }
-  }
-
   &.active {
     &::after {
       @apply border-gray-400;
     }
+    > .ball {
+      @apply bg-white border-2 border-purple-800;
+    }
+  }
+
+  &:hover:not(.next),
+  &.at {
     > .ball {
       @apply bg-white border-2 border-purple-800;
 
@@ -101,7 +93,7 @@ export default {
     }
   }
 
-  &.done:not(:hover) > .ball::before {
+  &.done:not(:hover):not(.at) > .ball::before {
     content: '✓';
     @apply text-white font-bold;
   }
