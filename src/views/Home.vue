@@ -9,11 +9,14 @@
         <steps :steps="steps" v-model:atStep="atStep" :lastStep="lastStep" />
       </div>
 
-      <pick-panel @next="lastStep > atStep && atStep++">
+      <pick-panel
+        @next="lastStep > atStep && atStep++"
+        :isLast="atStep === lastStep"
+      >
         <template #title>
           <p v-if="atStep === 0">Pick a Picture!</p>
           <p v-else-if="atStep === 1">
-            Pick a Sound! <span>(Hover over to listen)</span>
+            Pick a Sound! <span>(Hover or click to listen)</span>
           </p>
         </template>
         <template #default>
@@ -43,7 +46,7 @@ import Sounds from '@/components/Sounds.vue';
 import Steps from '@/components/Steps.vue';
 import Pictures from '@/components/Pictures.vue';
 import PickPanel from '@/components/PickPanel.vue';
-/* import { firestore } from '../firebase'; */
+import { firestore } from '../firebase';
 import soundsTemp from '../soundsTemp.js';
 
 export default {
@@ -86,6 +89,11 @@ export default {
     this.sounds = soundsTemp;
     /* firestore
       .collection('/sounds')
+      .get()
+      .then(res => res.docs.map(doc => doc.data()))
+      .then(sounds => (this.sounds = sounds.sort((a, b) => a.title > b.title))); */
+    /* firestore
+      .collection('/pictures')
       .get()
       .then(res => res.docs.map(doc => doc.data()))
       .then(sounds => (this.sounds = sounds.sort((a, b) => a.title > b.title))); */

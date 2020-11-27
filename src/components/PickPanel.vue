@@ -6,7 +6,13 @@
       <p><slot name="title">Pick one!</slot></p>
       <button
         @click="$emit('next')"
-        class="flex items-center ml-auto h-8 px-4 m-2 text-green-100 transition-colors duration-150 bg-green-700 rounded-lg focus:outline-none focus:ring-2 ring-offset-green-400 hover:bg-green-800"
+        class="flex items-center ml-auto h-8 px-4 m-2 text-green-100 transition-colors duration-150 rounded-lg "
+        :class="
+          isLast
+            ? 'bg-gray-700'
+            : 'bg-green-700 focus:outline-none focus:ring-2 ring-offset-green-400 hover:bg-green-800'
+        "
+        :disabled="isLast"
       >
         <span class="text-sm font-semibold">Next</span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -23,6 +29,7 @@
 
 <script>
 export default {
+  props: ['isLast'],
   emits: ['next'],
 };
 </script>
