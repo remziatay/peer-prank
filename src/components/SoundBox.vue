@@ -9,7 +9,7 @@
     <h1 class="text-2xl tracking-wider font-mono mx-auto">
       {{ sound.title }}
     </h1>
-    <badge :classes="'absolute -right-1 -top-1'">{{ sound.prankCount }}</badge>
+    <badge class="absolute -right-1 -top-1">{{ sound.prankCount }}</badge>
   </button>
 </template>
 

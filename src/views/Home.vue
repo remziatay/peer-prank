@@ -6,10 +6,10 @@
       <div
         class="flex-none py-2 px-4 overflow-auto bg-gray-100 bg-opacity-50 rounded-md shadow"
       >
-        <steps :steps="steps" v-model:atStep="atStep" :lastStep="lastStep" />
+        <Steps :steps="steps" v-model:atStep="atStep" :lastStep="lastStep" />
       </div>
 
-      <pick-panel
+      <PickPanel
         @next="lastStep > atStep && atStep++"
         :isLast="atStep === lastStep"
       >
@@ -19,27 +19,24 @@
             <p>Pick a Sound!</p>
             <p class="text-sm">(Hover or click to listen)</p>
           </div>
+          <p v-else-if="atStep === 2">Set some details!</p>
         </template>
         <template #default>
-          <pictures
-            v-if="atStep === 0"
-            :pictures="pictures"
-            v-model:picture="selectedPicture"
-          />
           <keep-alive>
-            <sounds
+            <Sounds
               v-if="atStep === 1"
               :sounds="sounds"
               v-model:sound="selectedSound"
             />
           </keep-alive>
-          <div
-            v-if="atStep === 2"
-            v-text="'TESSSStsadsadasdsa'"
-            @click="lastStep = 3"
+          <Pictures
+            v-if="atStep === 0"
+            :pictures="pictures"
+            v-model:picture="selectedPicture"
           />
+          <Details v-model:details="selectedDetails" v-else-if="atStep === 2" />
         </template>
-      </pick-panel>
+      </PickPanel>
     </div>
   </div>
 </template>
@@ -49,6 +46,7 @@ import Sounds from '@/components/Sounds.vue';
 import Steps from '@/components/Steps.vue';
 import Pictures from '@/components/Pictures.vue';
 import PickPanel from '@/components/PickPanel.vue';
+import Details from '@/components/Details.vue';
 /* import { firestore, storage } from '../firebase'; */
 import soundsTemp from '../soundsTemp.js';
 import picturesTemp from '../picturesTemp.js';
@@ -60,6 +58,7 @@ export default {
     Steps,
     Pictures,
     PickPanel,
+    Details,
   },
   data: () => ({
     sounds: [],
@@ -73,19 +72,29 @@ export default {
         title: 'Sound',
         description: 'Choose the sound that will play on jumpscare',
       },
-      { title: 'title3', description: 'description3' },
+      {
+        title: 'Details',
+        description: 'Some details for customer satisfaction',
+      },
       { title: 'title4', description: 'description4' },
       { title: 'title5', description: 'description5' },
     ],
     atStep: 0,
     selectedPicture: null,
     selectedSound: null,
+    selectedDetails: {
+      tryFullscreen: true,
+      volumeLevel: 0.5,
+      leaveGuard: false,
+      timeLimit: 8,
+    },
   }),
   computed: {
     lastStep() {
       if (!this.selectedPicture) return 0;
       if (!this.selectedSound) return 1;
-      return 2;
+      if (!this.selectedDetails) return 2;
+      return 3;
     },
   },
   mounted() {

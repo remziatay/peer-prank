@@ -1,6 +1,6 @@
 <template>
   <div
-    class="px-5 lg:px-3 pt-3 flex-1 min-w-0 overflow-auto grid gap-4 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
+    class="px-5 lg:px-3 pt-3 flex-1 overflow-auto grid gap-4 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
   >
     <button
       v-for="pic in pictures"
@@ -15,7 +15,7 @@
       >
         {{ pic.title }}
       </div>
-      <badge :classes="'absolute -right-1 -top-1'">{{ pic.prankCount }}</badge>
+      <badge class="absolute -right-1 -top-1">{{ pic.prankCount }}</badge>
     </button>
   </div>
 </template>

@@ -54,6 +54,7 @@ export default {
   },
   methods: {
     scare() {
+      //window.onbeforeunload = () => confirm(); // IT WORKS!!!
       if (!this.jump) {
         document.body.requestFullscreen().finally(() => {
           this.jump = !this.jump;
