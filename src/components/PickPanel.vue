@@ -1,7 +1,7 @@
 <template>
   <div class="w-full flex flex-col gap-2">
     <div
-      class="flex px-2 items-baseline text-xl font-semibold bg-gray-100 rounded shadow-md p-1"
+      class="flex px-2 items-center text-xl font-semibold bg-gray-100 bg-opacity-70 rounded shadow-md p-1"
     >
       <p><slot name="title">Pick one!</slot></p>
       <button
@@ -10,7 +10,7 @@
         :class="
           isLast
             ? 'bg-gray-700'
-            : 'bg-green-700 focus:outline-none focus:ring-2 ring-offset-green-400 hover:bg-green-800'
+            : 'bg-green-700 focus:outline-none focus:ring-2 ring-green-400 hover:bg-green-800'
         "
         :disabled="isLast"
       >

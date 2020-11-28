@@ -1,6 +1,6 @@
 <template>
   <button
-    class="bg-gray-100 p-2 shadow border-2 rounded-md flex flex-col gap-3 hover:shadow-lg hover:border-indigo-700 focus:outline-none"
+    class="relative bg-gray-100 p-2 shadow border-2 rounded-md flex flex-col justify-center hover:shadow-lg hover:border-indigo-700 focus:outline-none"
     :class="[selected && 'shadow-lg border-indigo-700']"
     @click="$emit('pick', sound.url) || player.play()"
     @mouseenter="player.play()"
@@ -9,15 +9,15 @@
     <h1 class="text-2xl tracking-wider font-mono mx-auto">
       {{ sound.title }}
     </h1>
-    <p class="text-xs font-semibold ml-auto">
-      Used in {{ sound.prankCount }} pranks.
-    </p>
+    <badge :classes="'absolute -right-1 -top-1'">{{ sound.prankCount }}</badge>
   </button>
 </template>
 
 <script>
 import { Howl } from 'howler';
+import Badge from './Badge.vue';
 export default {
+  components: { Badge },
   data: () => ({
     player: null,
   }),

@@ -1,10 +1,10 @@
 <template>
   <div class="home">
     <div
-      class="flex w-full mx-auto max-w-screen-2xl md:px-6 py-2 gap-2 max-h-full"
+      class="flex flex-col sm:flex-row w-full mx-auto max-w-screen-2xl px-1 md:px-6 py-2 gap-2 max-h-full"
     >
       <div
-        class="flex-none py-2 px-4 overflow-auto bg-gray-100 rounded-md shadow"
+        class="flex-none py-2 px-4 overflow-auto bg-gray-100 bg-opacity-50 rounded-md shadow"
       >
         <steps :steps="steps" v-model:atStep="atStep" :lastStep="lastStep" />
       </div>
@@ -15,9 +15,10 @@
       >
         <template #title>
           <p v-if="atStep === 0">Pick a Picture!</p>
-          <p v-else-if="atStep === 1">
-            Pick a Sound! <span>(Hover or click to listen)</span>
-          </p>
+          <div v-else-if="atStep === 1">
+            <p>Pick a Sound!</p>
+            <p class="text-sm">(Hover or click to listen)</p>
+          </div>
         </template>
         <template #default>
           <pictures
@@ -25,13 +26,15 @@
             :pictures="pictures"
             v-model:picture="selectedPicture"
           />
-          <sounds
-            v-else-if="atStep === 1"
-            :sounds="sounds"
-            v-model:sound="selectedSound"
-          />
+          <keep-alive>
+            <sounds
+              v-if="atStep === 1"
+              :sounds="sounds"
+              v-model:sound="selectedSound"
+            />
+          </keep-alive>
           <div
-            v-else-if="atStep === 2"
+            v-if="atStep === 2"
             v-text="'TESSSStsadsadasdsa'"
             @click="lastStep = 3"
           />
@@ -46,8 +49,9 @@ import Sounds from '@/components/Sounds.vue';
 import Steps from '@/components/Steps.vue';
 import Pictures from '@/components/Pictures.vue';
 import PickPanel from '@/components/PickPanel.vue';
-import { firestore } from '../firebase';
+/* import { firestore, storage } from '../firebase'; */
 import soundsTemp from '../soundsTemp.js';
+import picturesTemp from '../picturesTemp.js';
 
 export default {
   name: 'Home',
@@ -87,16 +91,18 @@ export default {
   mounted() {
     // Keep sounds local for now development
     this.sounds = soundsTemp;
-    /* firestore
+    this.pictures = picturesTemp;
+    /* const compare = (a, b) => a.title.localeCompare(b.title);
+    firestore
       .collection('/sounds')
       .get()
       .then(res => res.docs.map(doc => doc.data()))
-      .then(sounds => (this.sounds = sounds.sort((a, b) => a.title > b.title))); */
-    /* firestore
+      .then(sounds => (this.sounds = sounds.sort(compare)));
+    firestore
       .collection('/pictures')
       .get()
       .then(res => res.docs.map(doc => doc.data()))
-      .then(sounds => (this.sounds = sounds.sort((a, b) => a.title > b.title))); */
+      .then(pics => (this.pictures = pics.sort(compare))); */
   },
 };
 </script>
