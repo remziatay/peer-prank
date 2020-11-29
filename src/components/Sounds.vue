@@ -1,6 +1,6 @@
 <template>
   <div
-    class="px-3 pt-2 flex-1 min-w-0 overflow-auto grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+    class="flex-1 min-w-0 pb-3 grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
   >
     <sound-box
       v-for="snd in sounds"

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-1 bg-gray-100 bg-opacity-70">
+  <div class="bg-gray-100 bg-opacity-70 h-full">
     <slot />
     <div class="flex justify-center gap-4 flex-wrap px-5 lg:px-3 py-4">
       <div class="grid gap-4">

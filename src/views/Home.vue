@@ -20,33 +20,38 @@
             <p class="text-sm">(Hover or click to listen)</p>
           </div>
           <p v-else-if="atStep === 2">Set some details!</p>
+          <p v-else-if="atStep === 3">Time to scare!</p>
         </template>
         <template #default>
-          <keep-alive>
-            <Sounds
-              v-if="atStep === 1"
-              :sounds="sounds"
-              v-model:sound="selectedSound"
+          <div class="overflow-auto px-5 pt-3 flex-1">
+            <keep-alive>
+              <Sounds
+                v-if="atStep === 1"
+                :sounds="sounds"
+                v-model:sound="selectedSound"
+              />
+            </keep-alive>
+            <Pictures
+              v-if="atStep === 0"
+              :pictures="pictures"
+              v-model:picture="selectedPicture"
             />
-          </keep-alive>
-          <Pictures
-            v-if="atStep === 0"
-            :pictures="pictures"
-            v-model:picture="selectedPicture"
-          />
-          <Details
-            v-model:details="selectedDetails"
-            v-else-if="atStep === 2"
-            @demo="demoOn = true"
-          >
-            <scare-panel
-              :on="demoOn"
-              :picture="selectedPicture"
-              :sound="selectedSound"
-              v-bind="{ ...selectedDetails }"
-              @ended="demoOn = false"
-            />
-          </Details>
+            <Details
+              v-model:details="selectedDetails"
+              v-else-if="atStep === 2"
+              @demo="demoOn = true"
+            >
+              <scare-panel
+                :on="demoOn"
+                :picture="selectedPicture"
+                :sound="selectedSound"
+                v-bind="{ ...selectedDetails }"
+                @ended="demoOn = false"
+                stoppable
+              />
+            </Details>
+            <Share v-else-if="atStep === 3" />
+          </div>
         </template>
       </PickPanel>
     </div>
@@ -59,6 +64,7 @@ import Steps from '@/components/Steps.vue';
 import Pictures from '@/components/Pictures.vue';
 import PickPanel from '@/components/PickPanel.vue';
 import ScarePanel from '@/components/ScarePanel.vue';
+import Share from '@/components/Share.vue';
 import Details from '@/components/Details.vue';
 /* import { firestore, storage } from '../firebase'; */
 import soundsTemp from '../soundsTemp.js';
@@ -73,6 +79,7 @@ export default {
     PickPanel,
     Details,
     ScarePanel,
+    Share,
   },
   data: () => ({
     demoOn: false,
@@ -91,7 +98,7 @@ export default {
         title: 'Details',
         description: 'Some details for customer satisfaction',
       },
-      { title: 'title4', description: 'description4' },
+      { title: 'Share', description: 'Let the fun begin' },
       { title: 'title5', description: 'description5' },
     ],
     atStep: 0,

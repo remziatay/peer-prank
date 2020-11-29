@@ -7,7 +7,14 @@
     :style="{
       backgroundImage: `url(${cache?.src || ''})`,
     }"
-  ></div>
+  />
+  <button
+    class="fixed right-2 top-2 w-32 h-20 rounded-lg shadow-sm text-lg font-semibold bg-red-500 z-50"
+    v-if="jump && stoppable"
+    @click="scareOff"
+  >
+    STOP
+  </button>
 </template>
 
 <script>
@@ -21,6 +28,7 @@ export default {
     volumeLevel: { type: Number, default: 0.5 },
     timeLimit: { type: Number, default: 8 },
     on: { type: Boolean, default: false },
+    stoppable: { type: Boolean, default: false },
   },
   emits: ['sound-ready', 'picture-ready', 'all-ready', 'started', 'ended'],
   data() {

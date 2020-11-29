@@ -1,5 +1,5 @@
 <template>
-  <p class="absolute text-9xl  origin-center text-center mt-8">
+  <p class="absolute text-4xl  origin-center text-center mt-8">
     PRANKED
   </p>
   <button
