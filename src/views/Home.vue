@@ -34,7 +34,19 @@
             :pictures="pictures"
             v-model:picture="selectedPicture"
           />
-          <Details v-model:details="selectedDetails" v-else-if="atStep === 2" />
+          <Details
+            v-model:details="selectedDetails"
+            v-else-if="atStep === 2"
+            @demo="demoOn = true"
+          >
+            <scare-panel
+              :on="demoOn"
+              :picture="selectedPicture"
+              :sound="selectedSound"
+              v-bind="{ ...selectedDetails }"
+              @ended="demoOn = false"
+            />
+          </Details>
         </template>
       </PickPanel>
     </div>
@@ -46,6 +58,7 @@ import Sounds from '@/components/Sounds.vue';
 import Steps from '@/components/Steps.vue';
 import Pictures from '@/components/Pictures.vue';
 import PickPanel from '@/components/PickPanel.vue';
+import ScarePanel from '@/components/ScarePanel.vue';
 import Details from '@/components/Details.vue';
 /* import { firestore, storage } from '../firebase'; */
 import soundsTemp from '../soundsTemp.js';
@@ -59,8 +72,10 @@ export default {
     Pictures,
     PickPanel,
     Details,
+    ScarePanel,
   },
   data: () => ({
+    demoOn: false,
     sounds: [],
     pictures: [],
     steps: [
