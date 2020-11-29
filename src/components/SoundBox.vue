@@ -2,7 +2,7 @@
   <button
     class="relative bg-gray-100 p-2 shadow border-2 rounded-md flex flex-col justify-center hover:shadow-lg hover:border-indigo-700 focus:outline-none"
     :class="[selected && 'shadow-lg border-indigo-700']"
-    @click="$emit('pick', sound.url) || player.play()"
+    @click="select"
     @mouseenter="player.play()"
     @mouseleave="player.stop()"
   >
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { Howl } from 'howler';
+import { Howl, Howler } from 'howler';
 import Badge from './Badge.vue';
 export default {
   components: { Badge },
@@ -29,6 +29,13 @@ export default {
       preload: true,
       volume: 1,
     });
+  },
+  methods: {
+    select() {
+      this.$emit('pick', this.sound.url);
+      Howler.stop();
+      this.player.play();
+    },
   },
 };
 </script>

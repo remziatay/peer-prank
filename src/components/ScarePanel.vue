@@ -34,9 +34,6 @@ export default {
   mounted() {
     this.player = new Howl({
       src: [this.sound],
-      sprite: {
-        scare: [0, 1500],
-      },
       preload: true,
       loop: true,
       volume: this.volumeLevel,
@@ -56,9 +53,6 @@ export default {
       this.$emit('picture-ready', true);
     };
   },
-  beforeUnmount() {
-    if (this.leaveGuard) document.removeEventListener('beforeunload', confirm);
-  },
   methods: {
     scareOn() {
       if (this.leaveGuard) {
@@ -66,7 +60,7 @@ export default {
       }
       this.$refs.panel.focus();
       this.jump = true;
-      this.player.play('scare');
+      this.player.play();
       if (this.timeLimit) {
         setTimeout(this.scareOff, this.timeLimit * 1000);
       }
@@ -94,6 +88,9 @@ export default {
         this.scareOff();
         if (this.tryFullscreen) document.exitFullscreen();
       }
+    },
+    volumeLevel(val) {
+      this.player.volume(val);
     },
   },
 };

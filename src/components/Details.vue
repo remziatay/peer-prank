@@ -28,9 +28,9 @@
       </div>
       <button
         @click="$emit('demo')"
-        class="demo-button text-3xl font-mono font-semibold tracking-wide text-red-50 bg-red-700 flex-auto rounded-lg shadow transition-colors duration-150 focus:outline-none focus:ring-2 ring-red-400 hover:bg-red-800"
+        class="demo-button text-3xl font-mono font-semibold tracking-wide text-purple-50 bg-purple-700 flex-auto rounded-lg shadow transition-colors duration-500 focus:outline-none focus:ring-2 ring-purple-400 hover:bg-red-800"
       >
-        DEMO
+        TRY IT <span role="img">😈</span>
       </button>
     </div>
   </div>

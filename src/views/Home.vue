@@ -98,7 +98,7 @@ export default {
     selectedPicture: null,
     selectedSound: null,
     selectedDetails: {
-      tryFullscreen: true,
+      tryFullscreen: false,
       volumeLevel: 0.5,
       leaveGuard: false,
       timeLimit: 8,
