@@ -20,7 +20,8 @@
             <p class="text-sm">(Hover or click to listen)</p>
           </div>
           <p v-else-if="atStep === 2">Set some details!</p>
-          <p v-else-if="atStep === 3">Time to scare!</p>
+          <p v-else-if="atStep === 3">Pass the word to the victims!</p>
+          <p v-else-if="atStep === 4">Time to scare!</p>
         </template>
         <template #default>
           <div class="overflow-auto px-5 pt-3 flex-1">
@@ -51,6 +52,7 @@
               />
             </Details>
             <Share v-else-if="atStep === 3" />
+            <Cockpit v-else-if="atStep === 4" />
           </div>
         </template>
       </PickPanel>
@@ -66,6 +68,7 @@ import PickPanel from '@/components/PickPanel.vue';
 import ScarePanel from '@/components/ScarePanel.vue';
 import Share from '@/components/Share.vue';
 import Details from '@/components/Details.vue';
+import Cockpit from '@/components/Cockpit.vue';
 /* import { firestore, storage } from '../firebase'; */
 import soundsTemp from '../soundsTemp.js';
 import picturesTemp from '../picturesTemp.js';
@@ -80,6 +83,7 @@ export default {
     Details,
     ScarePanel,
     Share,
+    Cockpit,
   },
   data: () => ({
     demoOn: false,
@@ -99,7 +103,7 @@ export default {
         description: 'Some details for customer satisfaction',
       },
       { title: 'Share', description: 'Let the fun begin' },
-      { title: 'title5', description: 'description5' },
+      { title: 'Shoot!', description: 'Here is the cockpit' },
     ],
     atStep: 0,
     selectedPicture: null,
@@ -116,7 +120,7 @@ export default {
       if (!this.selectedPicture) return 0;
       if (!this.selectedSound) return 1;
       if (!this.selectedDetails) return 2;
-      return 3;
+      return 4;
     },
   },
   mounted() {

@@ -16,6 +16,9 @@
 <script>
 import { Howl } from 'howler';
 import Navbar from '@/components/Navbar.vue';
+import Peer from 'peerjs';
+import { computed } from 'vue';
+
 export default {
   components: {
     Navbar,
@@ -23,6 +26,16 @@ export default {
   data() {
     return {
       pranking: true,
+      connections: [],
+      peerId: null,
+      peer: null,
+    };
+  },
+  provide() {
+    return {
+      connections: computed(() => this.connections),
+      peerId: computed(() => this.peerId),
+      peer: computed(() => this.peer),
     };
   },
   watch: {
@@ -33,6 +46,33 @@ export default {
   mounted() {
     new Howl({ src: ['a.mp3'], preload: false }).once('unlock', function() {
       console.log('Sound unlocked');
+    });
+
+    const peer = new Peer();
+
+    peer.on('open', id => {
+      this.peerId = id;
+      this.peer = peer;
+    });
+
+    peer.on('connection', conn => {
+      conn.on('open', () => {
+        conn.on('data', message => {
+          this.connections = this.connections.map(connection => {
+            if (connection.id !== conn.peer) return connection;
+            return { ...connection, ...message };
+          });
+        });
+        conn.on('close', () => {
+          this.connections = this.connections.filter(
+            connection => connection.id !== conn.peer
+          );
+        });
+        this.connections = [
+          ...this.connections,
+          { id: conn.peer, connection: conn },
+        ];
+      });
     });
   },
 };

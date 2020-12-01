@@ -1,6 +1,6 @@
 <template>
   <p class="absolute text-4xl  origin-center text-center mt-8">
-    PRANKED
+    {{ peer.value ? 'YEP' : 'NOP' }}
   </p>
   <button
     class="absolute top-0 right-0 z-50 bg-pink-700 p-8 rounded"
@@ -26,7 +26,23 @@ export default {
   data: () => {
     return {
       jump: false,
+      conn: null,
     };
+  },
+  inject: ['peer', 'connections'],
+  watch: {
+    'peer.value'() {
+      if (!this.peer.value) return;
+      const peer = this.peer.value;
+      this.conn = peer.connect(this.$route.params.id);
+      this.conn.on('open', () => {
+        console.log('opened');
+        this.conn.on('data', data => {
+          console.log('data', data);
+          if (data.fire) this.jump = true;
+        });
+      });
+    },
   },
 };
 </script>
