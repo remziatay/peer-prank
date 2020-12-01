@@ -2,7 +2,7 @@
   <div class="h-screen flex flex-col">
     <navbar v-if="!pranking"></navbar>
     <router-view v-slot="{ Component }">
-      <keep-alive include="Home" max="1">
+      <keep-alive include="Create" max="1">
         <component
           class="flex-1 min-h-0 overflow-auto"
           :is="Component"
