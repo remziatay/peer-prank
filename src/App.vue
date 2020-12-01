@@ -7,6 +7,7 @@
           class="flex-1 min-h-0 overflow-auto"
           :is="Component"
           :key="$route.fullPath"
+          :unlocked="unlocked"
         ></component>
       </keep-alive>
     </router-view>
@@ -29,6 +30,7 @@ export default {
       connections: [],
       peerId: null,
       peer: null,
+      unlocked: false,
     };
   },
   provide() {
@@ -43,9 +45,10 @@ export default {
       this.pranking = this.$route.name === 'Prank';
     },
   },
+  methods: {},
   mounted() {
-    new Howl({ src: ['a.mp3'], preload: false }).once('unlock', function() {
-      console.log('Sound unlocked');
+    new Howl({ src: ['a.mp3'], preload: false }).once('unlock', () => {
+      this.unlocked = true;
     });
 
     const peer = new Peer();
@@ -58,6 +61,7 @@ export default {
     peer.on('connection', conn => {
       conn.on('open', () => {
         conn.on('data', message => {
+          console.log('Message came', message);
           this.connections = this.connections.map(connection => {
             if (connection.id !== conn.peer) return connection;
             return { ...connection, ...message };
@@ -70,7 +74,21 @@ export default {
         });
         this.connections = [
           ...this.connections,
-          { id: conn.peer, connection: conn },
+          {
+            id: conn.peer,
+            setup: data => {
+              console.log('sent', data);
+              conn.send({ setup: data });
+              this.connections = this.connections.map(connection => {
+                if (connection.id !== conn.peer) return connection;
+                return { ...connection, setup: null };
+              });
+            },
+            fire() {
+              console.log('FIRED');
+              conn.send({ fire: true });
+            },
+          },
         ];
       });
     });

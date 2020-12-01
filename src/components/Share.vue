@@ -43,12 +43,6 @@
       />
       <div class="flex gap-2 col-span-3 ml-auto">
         <button
-          @click="copy"
-          class="px-4 py-2 text-purple-50 bg-purple-600 rounded-lg shadow transition-colors duration-150 focus:outline-none focus:ring-2 ring-indigo-400 hover:bg-purple-800"
-        >
-          Copy
-        </button>
-        <button
           @click="share"
           class="px-4 py-2 text-purple-50 bg-purple-600 rounded-lg shadow transition-colors duration-150 focus:outline-none focus:ring-2 ring-indigo-400 hover:bg-purple-800"
         >
@@ -60,7 +54,6 @@
 </template>
 
 <script>
-import copy from 'copy-to-clipboard';
 import 'share-api-polyfill';
 export default {
   data: () => ({
@@ -68,22 +61,14 @@ export default {
     alert: null,
   }),
   methods: {
-    copy() {
-      copy(this.link, {
-        onCopy: () => {
-          this.alert = { message: 'Copied to clipboard!' };
-          setTimeout(() => (this.alert = null), 2500);
-        },
-      });
-    },
     share() {
       navigator
         .share(
-          { title: this.title, url: this.link, text: '' },
+          { title: this.title, url: this.link, text: ' ' },
           { print: false, linkedin: false, skype: false }
         )
         .then(() => {
-          this.alert = { message: 'Successfully shared!' };
+          this.alert = { message: 'Done!' };
           setTimeout(() => (this.alert = null), 2500);
         })
         .catch(() => {

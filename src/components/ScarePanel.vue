@@ -1,20 +1,25 @@
 <template>
   <div
-    ref="panel"
-    id="jumpscare"
+    class="fixed left-0 top-0 h-screen w-screen"
+    :style="{ zIndex: 9999999999 }"
     v-show="jump"
-    class="fixed left-0 top-0 z-40 h-screen w-screen mx-auto"
-    :style="{
-      backgroundImage: `url(${cache?.src || ''})`,
-    }"
-  />
-  <button
-    class="fixed right-2 top-2 w-32 h-20 rounded-lg shadow-sm text-lg font-semibold bg-red-500 z-50"
-    v-if="jump && stoppable"
-    @click="scareOff"
   >
-    STOP
-  </button>
+    <div
+      ref="panel"
+      id="jumpscare"
+      class="z-40 w-full h-full"
+      :style="{
+        backgroundImage: `url(${cache?.src || ''})`,
+      }"
+    />
+    <button
+      class="absolute right-2 top-2 w-32 h-20 rounded-lg shadow-sm text-lg font-semibold bg-red-500 z-50 pointer-events-auto"
+      v-if="jump && stoppable"
+      @click="scareOff"
+    >
+      STOP
+    </button>
+  </div>
 </template>
 
 <script>

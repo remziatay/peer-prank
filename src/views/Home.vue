@@ -123,6 +123,18 @@ export default {
       return 4;
     },
   },
+  inject: ['connections'],
+  watch: {
+    'connections.value'(connections) {
+      for (const conn of connections) {
+        conn.setup?.({
+          picture: this.selectedPicture,
+          sound: this.selectedSound,
+          ...this.selectedDetails,
+        });
+      }
+    },
+  },
   mounted() {
     // Keep sounds local for now development
     this.sounds = soundsTemp;
