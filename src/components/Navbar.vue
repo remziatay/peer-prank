@@ -77,8 +77,16 @@
             class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
           >
             <button
-              class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+              class="bell relative bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+              @click="alertCount = 0"
             >
+              <badge
+                v-if="alertCount"
+                class="absolute right-0 -top-2 bg-red"
+                :style="{ background: 'rgb(239, 68, 68)', padding: '3px 5px' }"
+              >
+                {{ alertCount }}
+              </badge>
               <span class="sr-only">View notifications</span>
               <!-- Heroicon name: bell -->
               <svg
@@ -97,6 +105,12 @@
                 />
               </svg>
             </button>
+            <div
+              v-show="newVictimCount"
+              class="modal select-none shadow-md bg-gray-800 text-white absolute top-full mt-1 right-0 min-w-max px-8 py-5 rounded border-2 border-red-800"
+            >
+              {{ newVictimCount }} new victim{{ newVictimCount > 1 ? 's' : '' }}
+            </div>
           </div>
         </div>
       </div>
@@ -119,18 +133,35 @@
 
 <script>
 import logo from '../assets/logo.png';
+import Badge from './Badge.vue';
 
 export default {
+  components: { Badge },
   data: () => ({
     menuOpen: false,
     logo,
+    alertCount: 0,
+    newVictimCount: 0,
   }),
   computed: {
     navs() {
       return this.$router.getRoutes().filter(route => route.name !== 'Prank');
     },
   },
+  inject: ['connections'],
+  watch: {
+    'connections.value.length'(val, oldVal) {
+      if (val - oldVal > 0) {
+        this.alertCount += val - oldVal;
+        this.newVictimCount = this.alertCount;
+      }
+    },
+  },
 };
 </script>
 
-<style></style>
+<style scoped>
+.bell:not(:focus) + .modal {
+  visibility: hidden;
+}
+</style>

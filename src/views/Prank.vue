@@ -408,7 +408,9 @@
       <div class="bg-gray-50 rounded-lg w-1/2" @click.stop>
         <div class="flex flex-col items-start p-4 gap-2">
           <div class="flex items-center w-full">
-            <div class="text-gray-900 font-medium text-lg">My modal title</div>
+            <div class="text-gray-900 font-semibold text-lg">
+              <span role="img">🍪</span>Cookies
+            </div>
             <svg
               class="ml-auto fill-current text-gray-700 w-6 h-6 cursor-pointer"
               xmlns="http://www.w3.org/2000/svg"
@@ -421,9 +423,10 @@
             </svg>
           </div>
           <hr />
-          <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          <div class="text-gray-900">
+            This website uses cookies to improve your user experience. By
+            accepting them you will allow us to do so. You can simply close this
+            modal to reject cookies.
           </div>
           <hr />
           <div class="ml-auto">
