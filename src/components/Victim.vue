@@ -1,6 +1,13 @@
 <template>
   <div
     class="flex border-gray-600 gap-8 border rounded py-2 px-4 justify-around items-center"
+    :class="
+      conn.started
+        ? !conn.ended
+          ? 'animate-pulse bg-indigo-300 transition-colors'
+          : 'grayscale'
+        : ''
+    "
   >
     <p class="font-semibold text-gray-800 ">ID: {{ conn.id }}</p>
     <div class="flex gap-2">
@@ -45,5 +52,8 @@ export default {
   &.fail {
     @apply bg-red-500;
   }
+}
+.grayscale {
+  filter: grayscale(100%);
 }
 </style>
