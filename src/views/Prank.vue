@@ -479,7 +479,6 @@ export default {
       this.conn = peer.connect(this.$route.params.id);
       this.conn.on('open', () => {
         this.conn.on('data', data => {
-          console.log(data);
           if (data.fire) this.jump = true;
           else if (data.setup) this.settings = data.setup;
         });

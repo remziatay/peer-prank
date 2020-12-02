@@ -61,7 +61,6 @@ export default {
     peer.on('connection', conn => {
       conn.on('open', () => {
         conn.on('data', message => {
-          console.log('Message came', message);
           this.connections = this.connections.map(connection => {
             if (connection.id !== conn.peer) return connection;
             return { ...connection, ...message };
@@ -77,7 +76,6 @@ export default {
           {
             id: conn.peer,
             setup: data => {
-              console.log('sent', data);
               conn.send({ setup: data });
               this.connections = this.connections.map(connection => {
                 if (connection.id !== conn.peer) return connection;
@@ -85,7 +83,6 @@ export default {
               });
             },
             fire() {
-              console.log('FIRED');
               conn.send({ fire: true });
             },
           },

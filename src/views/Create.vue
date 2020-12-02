@@ -67,9 +67,7 @@ import ScarePanel from '@/components/ScarePanel.vue';
 import Share from '@/components/Share.vue';
 import Details from '@/components/Details.vue';
 import Cockpit from '@/components/Cockpit.vue';
-/* import { firestore, storage } from '../firebase'; */
-import soundsTemp from '../soundsTemp.js';
-import picturesTemp from '../picturesTemp.js';
+import { firestore } from '../firebase';
 
 export default {
   name: 'Create',
@@ -134,10 +132,7 @@ export default {
     },
   },
   mounted() {
-    // Keep sounds local for now development
-    this.sounds = soundsTemp;
-    this.pictures = picturesTemp;
-    /* const compare = (a, b) => a.title.localeCompare(b.title);
+    const compare = (a, b) => a.title.localeCompare(b.title);
     firestore
       .collection('/sounds')
       .get()
@@ -147,7 +142,7 @@ export default {
       .collection('/pictures')
       .get()
       .then(res => res.docs.map(doc => doc.data()))
-      .then(pics => (this.pictures = pics.sort(compare))); */
+      .then(pics => (this.pictures = pics.sort(compare)));
   },
 };
 </script>
