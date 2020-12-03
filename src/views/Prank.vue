@@ -451,10 +451,10 @@
 
 <script>
 import ScarePanel from '../components/ScarePanel.vue';
+import { Howl } from 'howler';
 
 export default {
   components: { ScarePanel },
-  props: ['unlocked'],
   data: () => {
     return {
       jump: false,
@@ -484,9 +484,11 @@ export default {
         });
       });
     },
-    unlocked(val) {
-      if (val) this.sendMessage({ unlocked: true });
-    },
+  },
+  mounted() {
+    new Howl({ src: ['a.mp3'], preload: false }).once('unlock', () => {
+      this.sendMessage({ unlocked: true });
+    });
   },
 };
 </script>

@@ -10,7 +10,7 @@
       </div>
       <div class="mt-6 flex justify-center h-12 relative">
         <button
-          class="flex shadow-md font-medium absolute py-2 px-4 text-white bg-green-600 rounded text-lg tr-mt"
+          class="flex shadow-md font-medium absolute py-2 px-4 text-white bg-green-800 rounded text-lg tr-mt"
           @click="$router.replace('/create')"
         >
           Create now

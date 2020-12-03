@@ -7,7 +7,6 @@
           class="flex-1 min-h-0 overflow-auto"
           :is="Component"
           :key="$route.fullPath"
-          :unlocked="unlocked"
         ></component>
       </keep-alive>
     </router-view>
@@ -15,9 +14,7 @@
 </template>
 
 <script>
-import { Howl } from 'howler';
 import Navbar from '@/components/Navbar.vue';
-import Peer from 'peerjs';
 import { computed } from 'vue';
 
 export default {
@@ -30,7 +27,6 @@ export default {
       connections: [],
       peerId: null,
       peer: null,
-      unlocked: false,
     };
   },
   provide() {
@@ -45,48 +41,46 @@ export default {
       this.pranking = this.$route.name === 'Prank';
     },
   },
-  methods: {},
   mounted() {
-    new Howl({ src: ['a.mp3'], preload: false }).once('unlock', () => {
-      this.unlocked = true;
-    });
+    import('peerjs').then(pkg => {
+      const Peer = pkg.peerjs.Peer;
+      const peer = new Peer();
 
-    const peer = new Peer();
+      peer.on('open', id => {
+        this.peerId = id;
+        this.peer = peer;
+      });
 
-    peer.on('open', id => {
-      this.peerId = id;
-      this.peer = peer;
-    });
-
-    peer.on('connection', conn => {
-      conn.on('open', () => {
-        conn.on('data', message => {
-          this.connections = this.connections.map(connection => {
-            if (connection.id !== conn.peer) return connection;
-            return { ...connection, ...message };
+      peer.on('connection', conn => {
+        conn.on('open', () => {
+          conn.on('data', message => {
+            this.connections = this.connections.map(connection => {
+              if (connection.id !== conn.peer) return connection;
+              return { ...connection, ...message };
+            });
           });
-        });
-        conn.on('close', () => {
-          this.connections = this.connections.filter(
-            connection => connection.id !== conn.peer
-          );
-        });
-        this.connections = [
-          ...this.connections,
-          {
-            id: conn.peer,
-            setup: data => {
-              conn.send({ setup: data });
-              this.connections = this.connections.map(connection => {
-                if (connection.id !== conn.peer) return connection;
-                return { ...connection, setup: null };
-              });
+          conn.on('close', () => {
+            this.connections = this.connections.filter(
+              connection => connection.id !== conn.peer
+            );
+          });
+          this.connections = [
+            ...this.connections,
+            {
+              id: conn.peer,
+              setup: data => {
+                conn.send({ setup: data });
+                this.connections = this.connections.map(connection => {
+                  if (connection.id !== conn.peer) return connection;
+                  return { ...connection, setup: null };
+                });
+              },
+              fire() {
+                conn.send({ fire: true });
+              },
             },
-            fire() {
-              conn.send({ fire: true });
-            },
-          },
-        ];
+          ];
+        });
       });
     });
   },
