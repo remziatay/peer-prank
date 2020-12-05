@@ -61,7 +61,7 @@ export default {
       {
         q: 'What are those dots in the Cockpit?',
         a:
-          "First two dots will be green whe sound and picture is loaded. And third one when your friend interacts with the website in any way. This is necessary to play the sound on jumpscare but you don't have to wait for it to FIRE.",
+          "First two dots will be green when sound and picture are loaded. And third one when your friend interacts with the website in any way. This is necessary to play the sound on jumpscare but you don't have to wait for it to FIRE.",
       },
       {
         q: 'Can I contribute?',
