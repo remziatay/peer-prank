@@ -1,10 +1,10 @@
 <template>
+  <loading v-if="!pictures.length" />
   <div
+    v-else
     class="flex-1 pb-3 grid gap-4 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
   >
-    <loading v-if="!pictures.length" />
     <button
-      v-else
       v-for="pic in pictures"
       class="img relative flex bg-center bg-no-repeat bg-cover h-64 rounded shadow hover:scale-105 transform focus:outline-none"
       :class="pic.url === picture && 'selected'"
@@ -23,12 +23,21 @@
 </template>
 
 <script>
+import { getPictures } from '../firebase';
 import Badge from './Badge.vue';
 import Loading from './Loading.vue';
 export default {
   components: { Badge, Loading },
-  props: ['pictures', 'picture'],
+  data: () => ({
+    pictures: [],
+  }),
+  props: ['picture'],
   emits: ['update:picture'],
+  async mounted() {
+    this.pictures = (await getPictures()).sort((a, b) =>
+      a.title.localeCompare(b.title)
+    );
+  },
 };
 </script>
 

@@ -25,20 +25,12 @@
       <template #default>
         <div class="overflow-auto px-5 pt-3 flex-1">
           <keep-alive>
-            <Sounds
-              v-if="atStep === 1"
-              :sounds="sounds"
-              v-model:sound="selectedSound"
-            />
+            <Pictures v-if="atStep === 0" v-model:picture="selectedPicture" />
+            <Sounds v-else-if="atStep === 1" v-model:sound="selectedSound" />
           </keep-alive>
-          <Pictures
-            v-if="atStep === 0"
-            :pictures="pictures"
-            v-model:picture="selectedPicture"
-          />
           <Details
             v-model:details="selectedDetails"
-            v-else-if="atStep === 2"
+            v-if="atStep === 2"
             @demo="demoOn = true"
           >
             <scare-panel
@@ -67,7 +59,6 @@ import ScarePanel from '@/components/ScarePanel.vue';
 import Share from '@/components/Share.vue';
 import Details from '@/components/Details.vue';
 import Cockpit from '@/components/Cockpit.vue';
-import { getPictures, getSounds } from '../firebase';
 
 export default {
   name: 'Create',
@@ -83,8 +74,6 @@ export default {
   },
   data: () => ({
     demoOn: false,
-    sounds: [],
-    pictures: [],
     steps: [
       {
         title: 'Picture',
@@ -130,13 +119,6 @@ export default {
         });
       }
     },
-  },
-  mounted() {
-    const compare = (a, b) => a.title.localeCompare(b.title);
-    getPictures()
-      .then(pics => (this.pictures = pics.sort(compare)))
-      .then(getSounds)
-      .then(sounds => (this.sounds = sounds.sort(compare)));
   },
 };
 </script>

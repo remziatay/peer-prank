@@ -19,10 +19,3 @@
     </div>
   </div>
 </template>
-<script>
-export default {
-  mounted() {
-    import('./Create.vue');
-  },
-};
-</script>
