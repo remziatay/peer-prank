@@ -82,7 +82,7 @@ export default {
     link: {
       get() {
         const title = this.title.replaceAll(/\s+|[/.'"]/g, '-').toLowerCase();
-        return `${window.location.origin}/peer-prank/p/${title}/${this.peerId.value}`;
+        return `${window.location.origin}${process.env.BASE_URL}p/${title}/${this.peerId.value}`;
       },
       set() {
         const title = this.title;
