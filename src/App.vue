@@ -41,46 +41,47 @@ export default {
       this.pranking = this.$route.name === 'Prank';
     },
   },
-  mounted() {
-    import('peerjs').then(pkg => {
-      const Peer = pkg.peerjs.Peer;
-      const peer = new Peer();
+  async mounted() {
+    const {
+      peerjs: { Peer },
+    } = await import('peerjs');
 
-      peer.on('open', id => {
-        this.peerId = id;
-        this.peer = peer;
-      });
+    const peer = new Peer();
 
-      peer.on('connection', conn => {
-        conn.on('open', () => {
-          conn.on('data', message => {
-            this.connections = this.connections.map(connection => {
-              if (connection.id !== conn.peer) return connection;
-              return { ...connection, ...message };
-            });
+    peer.on('open', id => {
+      this.peerId = id;
+      this.peer = peer;
+    });
+
+    peer.on('connection', conn => {
+      conn.on('open', () => {
+        conn.on('data', message => {
+          this.connections = this.connections.map(connection => {
+            if (connection.id !== conn.peer) return connection;
+            return { ...connection, ...message };
           });
-          conn.on('close', () => {
-            this.connections = this.connections.filter(
-              connection => connection.id !== conn.peer
-            );
-          });
-          this.connections = [
-            ...this.connections,
-            {
-              id: conn.peer,
-              setup: data => {
-                conn.send({ setup: data });
-                this.connections = this.connections.map(connection => {
-                  if (connection.id !== conn.peer) return connection;
-                  return { ...connection, setup: null };
-                });
-              },
-              fire() {
-                conn.send({ fire: true });
-              },
-            },
-          ];
         });
+        conn.on('close', () => {
+          this.connections = this.connections.filter(
+            connection => connection.id !== conn.peer
+          );
+        });
+        this.connections = [
+          ...this.connections,
+          {
+            id: conn.peer,
+            setup: data => {
+              conn.send({ setup: data });
+              this.connections = this.connections.map(connection => {
+                if (connection.id !== conn.peer) return connection;
+                return { ...connection, setup: null };
+              });
+            },
+            fire() {
+              conn.send({ fire: true });
+            },
+          },
+        ];
       });
     });
   },

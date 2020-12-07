@@ -133,8 +133,10 @@ export default {
   },
   mounted() {
     const compare = (a, b) => a.title.localeCompare(b.title);
-    getSounds().then(sounds => (this.sounds = sounds.sort(compare)));
-    getPictures().then(pics => (this.pictures = pics.sort(compare)));
+    getPictures()
+      .then(pics => (this.pictures = pics.sort(compare)))
+      .then(getSounds)
+      .then(sounds => (this.sounds = sounds.sort(compare)));
   },
 };
 </script>

@@ -2,7 +2,9 @@
   <div
     class="flex-1 min-w-0 pb-3 grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
   >
+    <loading v-if="!sounds.length" />
     <sound-box
+      v-else
       v-for="snd in sounds"
       :key="snd.url"
       :sound="snd"
@@ -13,10 +15,11 @@
 </template>
 
 <script>
+import Loading from './Loading.vue';
 import SoundBox from './SoundBox.vue';
 
 export default {
-  components: { SoundBox },
+  components: { SoundBox, Loading },
   props: ['sounds', 'sound'],
   emits: ['update:sound'],
 };
