@@ -1,4 +1,4 @@
 module.exports = {
   lintOnSave: false,
-  publicPath: '/peer-prank/',
+  publicPath: process.env.BASE_URL,
 };
