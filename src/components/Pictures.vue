@@ -7,10 +7,10 @@
     <button
       v-for="pic in pictures"
       class="img relative flex bg-center bg-no-repeat bg-cover h-64 rounded shadow hover:scale-105 transform focus:outline-none"
-      :class="pic.url === picture && 'selected'"
+      :class="pic.url === picture?.url && 'selected'"
       :key="pic.url"
       :style="{ backgroundImage: `url(${pic.url})` }"
-      @click="$emit('update:picture', pic.url)"
+      @click="$emit('update:picture', pic)"
     >
       <div
         class="self-end w-full bg-black bg-opacity-70 text-indigo-200 font-mono tracking-wide uppercase text-xl h-1/6 flex items-center justify-center"

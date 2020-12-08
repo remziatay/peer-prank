@@ -37,7 +37,7 @@ export default {
   methods: {
     select() {
       if (!this.loaded) return;
-      this.$emit('pick', this.sound.url);
+      this.$emit('pick', this.sound);
       Howler.stop();
       this.player.play();
     },

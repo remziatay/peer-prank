@@ -9,7 +9,7 @@
       :key="snd.url"
       :sound="snd"
       @pick="$emit('update:sound', $event)"
-      :selected="snd.url === sound"
+      :selected="snd.url === sound?.url"
     ></sound-box>
   </div>
 </template>

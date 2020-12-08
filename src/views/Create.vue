@@ -113,8 +113,14 @@ export default {
     'connections.value'(connections) {
       for (const conn of connections) {
         conn.setup?.({
-          picture: this.selectedPicture,
-          sound: this.selectedSound,
+          picture: {
+            id: this.selectedPicture.id,
+            url: this.selectedPicture.url,
+          },
+          sound: {
+            id: this.selectedSound.id,
+            url: this.selectedSound.url,
+          },
           ...this.selectedDetails,
         });
       }

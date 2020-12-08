@@ -461,6 +461,7 @@ export default {
       conn: null,
       settings: null,
       showModal: true,
+      dirty: false,
     };
   },
   methods: {
@@ -479,8 +480,15 @@ export default {
       this.conn = peer.connect(this.$route.params.id);
       this.conn.on('open', () => {
         this.conn.on('data', data => {
-          if (data.fire) this.jump = true;
-          else if (data.setup) this.settings = data.setup;
+          if (data.fire) {
+            this.jump = true;
+            if (!this.dirty) {
+              this.dirty = true;
+              fetch(
+                `https://europe-west3-peer-prank.cloudfunctions.net/pranked?picture=${this.settings.picture.id}&sound=${this.settings.sound.id}`
+              );
+            }
+          } else if (data.setup) this.settings = data.setup;
         });
       });
     },

@@ -26,8 +26,8 @@
 import { Howl } from 'howler';
 export default {
   props: {
-    picture: { type: String, required: true },
-    sound: { type: String, required: true },
+    picture: { required: true },
+    sound: { required: true },
     tryFullscreen: { type: Boolean, default: false },
     leaveGuard: { type: Boolean, default: false },
     volumeLevel: { type: Number, default: 0.5 },
@@ -46,7 +46,7 @@ export default {
   },
   mounted() {
     this.player = new Howl({
-      src: [this.sound],
+      src: [this.sound.url],
       preload: true,
       loop: true,
       volume: this.volumeLevel,
@@ -60,7 +60,7 @@ export default {
       },
     });
     this.cache = new Image();
-    this.cache.src = this.picture;
+    this.cache.src = this.picture.url;
     this.cache.onload = () => {
       this.readyCount++;
       this.$emit('picture-ready', true);
