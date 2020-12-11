@@ -27,8 +27,8 @@ export default {
   props: ['sound'],
   emits: ['update:sound'],
   async mounted() {
-    this.sounds = (await getSounds()).sort((a, b) =>
-      a.title.localeCompare(b.title)
+    this.sounds = (await getSounds()).sort(
+      (a, b) => a.prankCount < b.prankCount
     );
   },
 };

@@ -34,8 +34,8 @@ export default {
   props: ['picture'],
   emits: ['update:picture'],
   async mounted() {
-    this.pictures = (await getPictures()).sort((a, b) =>
-      a.title.localeCompare(b.title)
+    this.pictures = (await getPictures()).sort(
+      (a, b) => a.prankCount < b.prankCount
     );
   },
 };
