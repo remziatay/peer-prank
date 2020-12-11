@@ -1,9 +1,9 @@
 <template>
-  <div class="bg-gray-50 bg-opacity-60 mx-auto p-6 flex flex-col gap-4 w-full">
+  <div class="bg-gray-50 bg-opacity-60 mx-auto p-6 flex flex-col w-full">
     <div
       v-for="(qa, i) in FAQs"
       :key="qa.q"
-      class="max-w-screen-xl w-full mx-auto"
+      class="max-w-screen-lg w-full mx-auto pb-4"
     >
       <div
         class="flex items-center justify-between bg-gray-200 pl-3 pr-2 py-3 w-full rounded text-gray-600 font-bold cursor-pointer hover:bg-gray-300"
@@ -52,7 +52,7 @@ export default {
       },
       {
         q: 'Is it dangerous?',
-        a: 'Yes. It might be dangerous. Use it on your own risk.',
+        a: 'Yes. It might be dangerous. Use it at your own risk.',
       },
       {
         q: 'Can I use the pictures/sounds of my choice?',
