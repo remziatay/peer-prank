@@ -35,7 +35,7 @@ export default {
   emits: ['update:picture'],
   async mounted() {
     this.pictures = (await getPictures()).sort(
-      (a, b) => a.prankCount < b.prankCount
+      (a, b) => b.prankCount - a.prankCount
     );
   },
 };

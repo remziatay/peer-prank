@@ -28,7 +28,7 @@ export default {
   emits: ['update:sound'],
   async mounted() {
     this.sounds = (await getSounds()).sort(
-      (a, b) => a.prankCount < b.prankCount
+      (a, b) => b.prankCount - a.prankCount
     );
   },
 };
